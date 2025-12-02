@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume & Biodata Portal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Resume & Biodata Portal</h1>
+
+        <div class="buttons">
+            <button onclick="openPage('resume')">View Resume</button>
+            <button onclick="openPage('biodata')">View Biodata</button>
+        </div>
+    </div>
+
+    <script>
+        function openPage(type) {
+            window.location.href = `select-person.html?type=${type}`;
+        }
+    </script>
+
+</body>
+</html>

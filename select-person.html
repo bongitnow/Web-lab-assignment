@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Person</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Select a Person</h1>
+        <p id="page-type"></p>
+
+        <div class="buttons">
+            <button onclick="openPage('arnav')">Arnav Singh</button>
+            <button onclick="openPage('bhavana')">Bhavana Hegde</button>
+            <button onclick="openPage('abhishek')">Abhishek Saini</button>
+            <button onclick="openPage('chaithanya')">Chaithanya D S</button>
+        </div>
+
+        <button class="back-btn" onclick="goBack()">⬅ Go Back</button>
+    </div>
+
+    <script>
+        // get whether user selected resume or biodata
+        const params = new URLSearchParams(window.location.search);
+        const type = params.get("type");  // "resume" or "biodata"
+
+        document.getElementById("page-type").innerText =
+            "Showing " + type.toUpperCase() + " – Select a person";
+
+        function openPage(person) {
+            // open internal display page with person & type
+            window.location.href = `display.html?person=${person}&type=${type}`;
+        }
+
+        function goBack() {
+            window.location.href = "index.html";
+        }
+    </script>
+
+</body>
+</html>

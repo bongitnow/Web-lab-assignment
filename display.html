@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Info</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="data.js"></script>
+</head>
+
+<body>
+
+    <div class="container" id="contentBox">
+        <h1 id="title"></h1>
+        <div id="output"></div>
+        <button class="back-btn" onclick="goBack()">⬅ Go Back</button>
+    </div>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const person = params.get("person");
+    const type = params.get("type");
+
+    const data = INFO[person];
+    const output = document.getElementById("output");
+
+    document.getElementById("title").innerText =
+        `${data.name} – ${type.toUpperCase()}`;
+
+    if (type === "biodata") {
+        output.innerHTML = `
+            <h2>Biodata</h2>
+            <p><b>Date of Birth:</b> ${data.biodata.dob}</p>
+            <p><b>Address:</b> ${data.biodata.address}</p>
+            <p><b>Languages Known:</b> ${data.biodata.languages}</p>
+            <p><b>Hobbies:</b> ${data.biodata.hobbies}</p>
+        `;
+    }
+
+    if (type === "resume") {
+        const r = data.resume;
+
+        let html = `<h2>Resume</h2>`;
+
+        if (r.summary) html += `<p><b>Summary:</b> ${r.summary}</p>`;
+
+        if (r.contact) {
+            html += `<h3>Contact</h3>`;
+            for (let key in r.contact) {
+                html += `<p><b>${key}:</b> ${r.contact[key]}</p>`;
+            }
+        }
+
+        if (r.objective) html += `<p><b>Objective:</b> ${r.objective}</p>`;
+
+        if (r.education) {
+            html += `<h3>Education</h3><ul>`;
+            r.education.forEach(e => html += `<li>${e}</li>`);
+            html += `</ul>`;
+        }
+
+        if (r.skills) {
+            html += `<h3>Skills</h3>`;
+            if (Array.isArray(r.skills)) {
+                html += `<ul>${r.skills.map(s => `<li>${s}</li>`).join("")}</ul>`;
+            } else {
+                html += `<ul>`;
+                for (let cat in r.skills) {
+                    html += `<li><b>${cat}:</b> ${r.skills[cat].join(", ")}</li>`;
+                }
+                html += `</ul>`;
+            }
+        }
+
+        if (r.projects) {
+            html += `<h3>Projects</h3><ul>`;
+            r.projects.forEach(p => html += `<li>${p}</li>`);
+            html += `</ul>`;
+        }
+
+        if (r.achievements) {
+            html += `<h3>Achievements</h3><ul>`;
+            r.achievements.forEach(a => html += `<li>${a}</li>`);
+            html += `</ul>`;
+        }
+
+        if (r.certifications) {
+            html += `<h3>Certifications</h3><ul>`;
+            r.certifications.forEach(c => html += `<li>${c}</li>`);
+            html += `</ul>`;
+        }
+
+        output.innerHTML = html;
+    }
+
+    function goBack() {
+        window.history.back();
+    }
+</script>
+
+</body>
+</html>
